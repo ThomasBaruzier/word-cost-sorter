@@ -20,8 +20,10 @@ for ((n=0; n < ${#words[@]}; n++)); do
     id2=${keyboard[''${word:i+1:1}'']}
     ((difficulty+=$((((($id1/20 - $id2/20) * 2 ) ** 2) + (($id1%20 - $id2%20) ** 2)))))
   done
-  if (( $difficulty-1 < $min_difficulty )); then
+  if (( $difficulty < $min_difficulty )); then
     min_difficulty=$difficulty
+  fi
+  if (( $difficulty-10 < $min_difficulty )); then
     echo "$difficulty > $word"
   fi
 done
