@@ -4,19 +4,16 @@
 
 int main(int argc, char *argv[])
 {
-  if (argc == 2)
+  if (argc <= 1)
   {
-    int length;
-    printf("arg : %s\n", argv[1]);
-    scanf("%d", &length);
-    printf("%d", length);
+    printf("Missing length argument\n");
+    exit(1);
   }
-/*
-  srand(time(NULL));
-  int random, pos, length = (int)argv[1];
+  int random, pos, length = atoi(argv[1]);
   int arrSize = 8200000 - ((length + 1) % 8200000);
   int repeat = arrSize / (length + 1);
   char caracter[arrSize + 1];
+  srand(time(NULL));
 
   for (int times = 0; times < 9; times++)
   {
@@ -98,5 +95,5 @@ int main(int argc, char *argv[])
     }
     caracter[pos-1] = '\0';
     printf("%s\n", caracter);
-  } */
+  }
 }

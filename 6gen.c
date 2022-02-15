@@ -8,7 +8,7 @@ int main()
   char caracter[((length + 1) * 100000) + 1];
   srand(time(NULL));
 
-  for (int times = 0; times < 10000; times++)
+  for (int times = 0; times < 100; times++)
   {
     pos = 0;
     for (int i = 0; i < 100000; i++)
