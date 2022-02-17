@@ -1,7 +1,6 @@
 # include <stdio.h>
-# include <math.h>
 # include <stdlib.h>
-# include <string.h>
+# include <math.h>
 
 int getIndex(char letter)
 {
@@ -76,48 +75,46 @@ int getIndex(char letter)
   return index;
 }
 
-int main(void)
+int main (void)
 {
-  FILE* file;
+  FILE *file;
+  int ch1, ch2, x, y, pos;
+  float diff, min_diff = 1000000;
+  char line[1000];
   file = fopen("input", "r");
-  char word[150];
-  int i = 0, i1, i2, y;
-  float x, diff = 0.0, min_diff = 1000000;
-
-  if (NULL == file)
+  if (file == NULL) { return 0; }
+  while (fgets (line, 1000, file) != NULL)
   {
-    printf("File doesn't exist\n");
-    return 0;
-  }
-
-  while (fgets(word, 150, file) != NULL)
-  {
-
+    pos = 0;
     diff = 0.0;
-    i = 0;
-    while (1)
+    while (line[pos+1] != '\n')
     {
-      i1 = getIndex(word[i]);
-      i2 = getIndex(word[i+1]);
-      if (i2 == 100)
+      ch1 = getIndex(line[pos]);
+      ch2 = getIndex(line[pos+1]);
+      if (ch2 == 100)
       {
-        if (diff <= min_diff)
-        {
-          min_diff = diff;
-          printf("%s~%f\n", word, diff);
-        }
-        break;
+        printf("Unsupported character: %c", line[pos]);
+        return 0;
       }
-      x = (i1 % 20 - i2 % 20) / 2.0;
-      y = (i1 / 20 - i2 / 20);
+      x = (ch1 % 20 - ch2 % 20) / 2.0;
+      y = (ch1 / 20 - ch2 / 20);
       diff += sqrt((x * x) + (y * y));
-      // printf("%c - %c > %f\n", word[i], word[i+1], diff);
-      i++;
+      // printf("%c - %c > %f\n", line[pos], line[pos+1], diff);
+      pos++;
     }
-
+    if (diff <= min_diff)
+    {
+      pos = 0;
+      min_diff = diff;
+      printf("%f > ", diff);
+      while (line[pos] != '\n')
+      {
+        printf("%c", line[pos]);
+        pos++;
+      }
+      puts("");
+    }
   }
-
-  printf("Done\n");
   fclose(file);
   return 0;
 }
