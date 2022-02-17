@@ -82,7 +82,8 @@ int main (void)
   float diff, min_diff = 1000000;
   char line[1000];
   file = fopen("input", "r");
-  if (file == NULL) { return 0; }
+  if (file == NULL)
+  { return 0; }
   while (fgets (line, 1000, file) != NULL)
   {
     pos = 0;

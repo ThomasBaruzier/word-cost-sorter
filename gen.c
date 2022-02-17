@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
   char caracter[arrSize + 1];
   srand(time(NULL));
 
-  for (int times = 0; times < 9; times++)
+  for (int times = 0; times < 100; times++)
   {
     pos = 0;
     for (int i = 0; i < repeat; i++)
