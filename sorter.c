@@ -1,10 +1,13 @@
-# include <stdio.h>
-# include <stdlib.h>
-# include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+#define LINESIZE 100
 
 int getIndex(char letter)
 {
   int index;
+
   switch (letter)
   {
     case '1': index = 0; break;
@@ -46,41 +49,45 @@ int getIndex(char letter)
     case '.': index = 77; break;
     default: index = 100;
   }
+
   return index;
 }
 
 int main(int argc, char *argv[])
 {
-  FILE *file;
+  if (argc < 2 || argc > 3) {
+    printf("Usage : %s <filename> [verbosity]\n", argv[0]);
+    printf("Note : The verbosity argument corresponds to the amount of progress needed to print a new result. Default is 0.5.\n");
+    return 1;
+  }
+
   int ch1, ch2, x, y, pos;
-  float diff, min_diff = 12;
-  char line[1000];
-  file = fopen("input", "r");
-  if (file == NULL)
-  {
-    return 0;
+  float diff, min_diff = 1000000;
+  char line[LINESIZE];
+
+  FILE *file;
+  file = fopen(argv[1], "r");
+  if (file == NULL) {
+    printf("Error opening %s!\n", argv[1]);
+    return 1;
   }
 
   float verbosity = 1;
-  if (argc == 2)
-  {
-    verbosity = atoi(argv[1]);
-  }
+  if (argc == 3)
+    verbosity = atoi(argv[2]);
 
-  while (fgets (line, 1000, file) != NULL)
-  {
+  while (fgets (line, LINESIZE, file) != NULL) {
     pos = 0;
     diff = 0.0;
 
-    while (line[pos+1] != '\n')
-    {
+    while (line[pos+1] != '\n') {
       ch1 = getIndex(line[pos]);
       ch2 = getIndex(line[pos+1]);
-      if (ch2 == 100)
-      {
-        printf("Unsupported character: %c\n", line[pos+1]);
+      if (ch2 == 100) {
+        printf("Unsupported character: '%c'\n", line[pos+1]);
         return 0;
       }
+
       x = (ch1 % 20 - ch2 % 20) / 2.0;
       y = (ch1 / 20 - ch2 / 20);
       diff += sqrt((x * x) + (y * y));
@@ -88,24 +95,20 @@ int main(int argc, char *argv[])
       pos++;
     }
 
-    if (diff - verbosity <= min_diff)
-    {
+    if (diff - verbosity <= min_diff) {
       pos = 0;
       printf("%0.2f > ", diff);
-      while (line[pos] != '\n')
-      {
+      while (line[pos] != '\n') {
         printf("%c", line[pos]);
         pos++;
       }
-      puts("");
+      printf("\n");
       if (diff <= min_diff)
-      {
         min_diff = diff;
-      }
-
     }
 
   }
+
   fclose(file);
   return 0;
 }
