@@ -6,10 +6,10 @@ It also includes a fast random string generator for testing purposes.
 
 ## Usage
 ### String generation
-gen.exe <filename> <string length> <number of lines>
+gen.exe \<filename\> \<string length\> \<number of lines\>
 
 ### Sorting
-sorter.exe <filename> [verbosity]
+sorter.exe \<filename\> \[verbosity\]
 Note : The verbosity argument corresponds to the amount of progress needed to print a new result. Default is 0.5.
 
 ## Why
